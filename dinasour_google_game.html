@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" onclick="jump()">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden;
+      }
+      body{
+        background-color: black;
+    }
+      .game {
+        width: 500px;
+        height: 200px;
+        margin: auto;
+        align-items: center;
+        margin-top: 20%;
+      }
+      #character {
+        width: 20px;
+        height: 50px;
+        background-color: red;
+        position: relative;
+        top: 150px;
+      }
+      .animate {
+        animation: jump 0.3s linear;
+      }
+      @keyframes jump {
+        0% {
+          top: 150px;
+        }
+        30% {
+          top: 100px;
+        }
+        70% {
+          top: 100px;
+        }
+        100% {
+          top: 150px;
+        }
+      }
+
+      #block {
+        background-color: rgb(47, 255, 0);
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: 130px;
+        left: 500px;
+        animation: block 3s infinite linear;
+      }
+      @keyframes block {
+        0% {
+          left: 500px;
+        }
+        100% {
+          left: -20px;
+        }
+      }
+      p,h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: red;
+      }
+      a{
+        color: greenyellow;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="game">
+      <div id="character"></div>
+      <div id="block"></div>
+    </div>
+    <p>Score: <span id="scoreSpan"></span></p>
+    <h3>this game created by <a href="https://github.com/kunalpatel196">kunalpatel196</a></h3>
+  </body>
+  <script>
+    var character = document.getElementById("character");
+    var block = document.getElementById("block");
+    var counter = 0;
+    function jump() {
+      if (character.classList == "animate") {
+        return;
+      }
+      character.classList.add("animate");
+      setTimeout(function () {
+        character.classList.remove("animate");
+      }, 300);
+    }
+    var checkDead = setInterval(function () {
+      let characterTop = parseInt(
+        window.getComputedStyle(character).getPropertyValue("top")
+      );
+      let blockLeft = parseInt(
+        window.getComputedStyle(block).getPropertyValue("left")
+      );
+      if (blockLeft < 20 && blockLeft > -20 && characterTop >= 130) {
+        block.style.animation = "none";
+        alert("Game Over. score: " + Math.floor(counter / 100));
+        counter = 0;
+        block.style.animation = "block 1s infinite linear";
+      } else {
+        counter++;
+        document.getElementById("scoreSpan").innerHTML = Math.floor(
+          counter / 100
+        );
+      }
+    }, 10);
+  </script>
+</html>
